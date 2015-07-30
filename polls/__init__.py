@@ -42,6 +42,9 @@ def main(global_config, **settings):
     # Update redis.sessions.url
     config.registry.settings['redis.sessions.url'] = get_redis_url()
 
+    config.include('pyramid_redis_sessions')
+    config.include('pyramid_jinja2')
+
     # Add .html extension as a renderer
     config.add_jinja2_renderer('.html')
 
