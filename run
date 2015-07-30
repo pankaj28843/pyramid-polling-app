@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+# Install dependencies
+python setup.py develop
+pip install -r requirements.txt
+
+# Create and set permissions on media folder
+mkdir -p polls/media/
+chmod -R 777 polls/media/
+
+# Install bower dependencies
+bower --config.interactive=false install
+
+# Run database migrations
+alembic upgrade head
+
+python runapp.py
