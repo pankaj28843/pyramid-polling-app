@@ -8,6 +8,7 @@ from polls.models.meta.base import (
 )
 from polls.settings import MEDIA_ROOT
 from polls.settings.database import get_db_engine
+from polls.settings.redis import get_redis_url
 from polls.settings.security import AUTH_SECRET
 from polls.security import (
     get_principal_indentifiers,
@@ -37,6 +38,9 @@ def main(global_config, **settings):
 
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_static_view(name='media', path=MEDIA_ROOT, cache_max_age=3600)
+
+    # Update redis.sessions.url
+    config.registry.settings['redis.sessions.url'] = get_redis_url()
 
     # Add .html extension as a renderer
     config.add_jinja2_renderer('.html')
