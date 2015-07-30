@@ -51,13 +51,13 @@ def login_view(request):
     context = {}
 
     if request.method == "POST":
-        email = request.POST.get('email', '')
+        username = request.POST.get('username', '')
         password = request.POST.get('password', '')
 
-        context.update(email=email)
+        context.update(username=username)
 
-        user = User.get(email=email).first()
-        if user:
+        user = User.get(username=username)
+        if user is not None:
             if user.check_password(password):
                 if user.is_active is True:
                     headers = remember(request, user.id)
@@ -67,7 +67,7 @@ def login_view(request):
             else:
                 context.update(invalid_password=True)
         else:
-            context.update(invalid_email=True)
+            context.update(invalid_username=True)
 
     context.update({
         'next': next,
