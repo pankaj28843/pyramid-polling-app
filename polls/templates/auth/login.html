@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block breadcrumb %}
+<li>
+    <a href="{{ request.route_url('home') }}">Home</a>
+</li>
+<li class="active">Login</li>
+{% endblock breadcrumb %}
+{% block content %}
+<form role="form" method="post" action="">
+    <input type="hidden" name="_csrf" value="{{ request.csrf_token}}">
+    {% if inactive_user %}
+    <div>
+        <p>
+            <span class="text-danger"><strong>Your user account is not active yet. Please contact your adminstrator.</strong></span>
+        </p>
+    </div>
+    {% endif %}
+    <div class="form-group {% if invalid_username %}has-error has-feedback{% endif %}">
+        <label for="id_username">Username:</label>
+        <input class="form-control" id="id_username" maxlength="254" name="username" type="text" value="{{ username }}" required>
+        {% if invalid_username %}
+        <span class="help-block">You submitted incorrect username.</span>
+        {% endif %}
+    </div>
+    <div class="form-group {% if invalid_password %}has-error has-feedback{% endif %}">
+        <label for="id_password">Password:</label>
+        <input class="form-control" id="id_password" name="password" type="password" required>
+        {% if invalid_password %}
+        <span class="help-block">You submitted incorrect password.</span>
+        {% endif %}
+    </div>
+
+    <input type="submit" value="Log in" />
+    <input type="hidden" name="next" value="{{ next }}" />
+</form>
+{% endblock %}

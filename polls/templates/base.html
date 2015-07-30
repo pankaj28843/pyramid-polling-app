@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{% block page_title %}{% endblock page_title %} | Polling app</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{{ request.static_url('polls:static/bower_components/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="{{ request.static_url('polls:static/bower_components/anchor-js/anchor.min.js') }}"></script>
+
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <div class="container">
+        <div class="header">
+            <ul class="nav nav-pills pull-right">
+                <li>
+                    <a href="{{ request.route_url('home') }}">Home</a>
+                </li>
+
+                {% if request.user %}
+                <li class="divider-vertical">
+                    <span class="btn btn-default dropdown-toggle" type="button" id="user_account_menu" data-toggle="dropdown" aria-expanded="true">
+                        Your Account
+                        <span class="caret"></span>
+                    </span>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="user_account_menu">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ request.route_url('auth_change_password') }}">Change Password</a>
+                        </li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1">
+                            <a href="{{ request.route_url('logout') }}">Logout</a>
+                        </li>
+                    </ul>
+                </li>
+
+                {% else %}
+                <li class="divider-vertical">
+                    <a href="{{ request.route_url('login') }}">Login</a>
+                </li>
+                {% endif %}
+            </ul>
+            <a href="/"><h3 class="text-muted">Polls</h3></a>
+        </div>
+        <div>
+            <ol class="breadcrumb">
+                {% block breadcrumb %}{% endblock breadcrumb %}
+            </ol>
+        </div>
+        <div>
+            <h2>{% block page_heading %}{% endblock page_heading %}</h2>
+            <div class="alert alert-block">
+                <ul>
+                {% for message in request.session.pop_flash('success') %}
+                <li>{{ message|escape }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+            {% block content %}{% endblock content %}
+        </div>
+        <div class="footer">
+            <hr>
+            <p>Created with ♥ | <a href="https://twitter.com/psjinx" target="_blank">@psjinx</a></p>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="{{ request.static_url('polls:static/bower_components/jquery/dist/jquery.min.js') }}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{{ request.static_url('polls:static/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
+</body>
+
+</html>

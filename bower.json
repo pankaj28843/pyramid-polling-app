@@ -1,0 +1,7 @@
+{
+  "name": "pyramid_polls_app",
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "anchor-js": "~1.2.1"
+  }
+}
